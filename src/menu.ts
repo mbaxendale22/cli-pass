@@ -8,12 +8,12 @@ export function topLevelMenuChoice() {
         'Welcome to the password manager\n\nWhat would you like to do?\n'
     )
     console.log(
-        '1) Search for a password \n2) Create a new password \n3) Exit\n'
+        '1) Use // Amend // Delete a password \n2) Create a new password \n3) See admin options\n4) Exit'
     )
 
     while (!validChoice) {
         choice = myPrompt('Please select an option: ')
-        if (choice === '1' || choice === '2' || choice === '3') {
+        if (choice === '1' || choice === '2' || choice === '3'|| choice === '4') {
             validChoice = true
         }
     }
@@ -23,9 +23,7 @@ export function topLevelMenuChoice() {
 export function searchTypeMenu() {
     let valid = false
     while (!valid) {
-        console.log('How would you like to search?')
-        console.log('1) By NAME')
-        console.log('2) By FIRST LETTER')
+        console.log('\nHow would you like to search?\n\n1) By NAME\n2) By FIRST LETTER\n')
         const searchTypeInput = myPrompt('Please select an option: ')
         const searchType = selectSearchType(searchTypeInput)
         if (searchType) {
@@ -36,12 +34,5 @@ export function searchTypeMenu() {
     }
 }
 
-export function singlePasswordMenu() {
-    console.log(
-        'What would you like to do?\n1) Use password\n2) Update password\n3) Delete item\n4) Return to main menu'
-    )
-    const choice = myPrompt('Please select an option: ')
-    return choice
-}
 
 

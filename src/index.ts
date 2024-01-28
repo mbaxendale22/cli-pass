@@ -1,59 +1,50 @@
-import PromptSync from 'prompt-sync'
-import { Item, searchByFirstLetter, searchByName } from './db'
-import {
-    SearchType,
-    handleMultipleResults,
-    handleSingleResult,
-} from './search'
-import { checkForExit, myPrompt } from './utils'
-import { searchTypeMenu, topLevelMenuChoice } from './menu'
 
-const prompt = PromptSync()
+import { topLevelMenuChoice } from './menu'
+import { searchForPassword } from './search'
+import { createNewItem } from './itemGeneration/newItemForms'
+import { rudMenu } from './readUpdateDeleteItems/rudMenu'
+import { initApp } from './startup'
+import { Item } from './@types/customTypes'
 
-async function searchForPassword() {
-    const searchType = searchTypeMenu()
-    let items: Item[] = []
+// TODO: give user option to change params of generated password
+// TODO: give user option to preview enerated password and regen if necessary
+// TODO: allow user to generate a new password for an existing item
+// TODO: allow user to save email accounts for quick entry
 
-    if (searchType === SearchType.NAME) {
-        const searchTerm = prompt('What is the name of the item? ')
-        checkForExit(searchTerm)
-        items = await searchByName(searchTerm)
-        if (!items.length) {
-            console.log('No passwords found')
-        }
-        handleSingleResult(items[0])
-    }
-    if (searchType === SearchType.LETTER) {
-        const searchLetter = prompt('What is the first letter of the name? ')
-        checkForExit(searchLetter)
-        items = await searchByFirstLetter(searchLetter)
-        if (!items.length) {
-            console.log('No passwords found')
-        }
-        if (items.length === 1) {
-            handleSingleResult(items[0])
-        }
-        handleMultipleResults(items)
-    }
-}
+// test master password = "testpassword"
+let active_master_password = ''
 
 async function main() {
     let exit = false
-    while (!exit) {
-        const router = topLevelMenuChoice()
 
+    active_master_password = await initApp() 
+
+
+    while (!exit) {
+        let itemArr: Item[]
+        const router = topLevelMenuChoice()
         switch (router) {
             case '1':
-                await searchForPassword()
+                itemArr = await searchForPassword()
+                if (!itemArr.length) break
+                // user select between view, amend, delete an item
+                await rudMenu(itemArr.at(0), active_master_password)
                 break
             case '2':
-                console.log('create new password')
+                await createNewItem(active_master_password)
                 break
             case '3':
+                console.log('admin options')
+                break
+            case '4':
+                console.log("\nOkay bye now!\n")
                 exit = true
                 break
         }
+
     }
 }
 
+
 main()
+

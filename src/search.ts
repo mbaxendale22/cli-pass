@@ -1,10 +1,38 @@
-import { Item } from './db'
+import { Item } from './@types/customTypes'
+import { searchByFirstLetter, searchByName } from './db'
+import { searchTypeMenu } from './menu'
 import {  myPrompt } from './utils'
-import * as clipboard from 'clipboardy'
 
 export enum SearchType {
     NAME = '1',
     LETTER = '2',
+}
+export async function searchForPassword() {
+    const searchType = searchTypeMenu()
+    let items: Item[] = []
+
+    if (searchType === SearchType.NAME) {
+        const searchTerm = myPrompt('What is the name of the item? ')
+        items = await searchByName(searchTerm)
+        if (!items.length) {
+            console.log('No passwords found')
+            return items
+        }
+        return items
+    }
+
+    if (searchType === SearchType.LETTER) {
+        const searchLetter = myPrompt('What is the first letter of the name? ')
+        items = await searchByFirstLetter(searchLetter)
+        if (!items.length) {
+            console.log('No passwords found')
+            return items
+        }
+        if (items.length === 1) {
+            return items
+        }
+        return handleMultipleResults(items)
+    }
 }
 
 export function selectSearchType(searchType: string) {
@@ -17,20 +45,6 @@ export function selectSearchType(searchType: string) {
     return null
 }
 
-export function handleSingleResult(item: Item) {
-    console.log('\n******* Found password ******\n')
-    console.log(`id: ${item.id}, name: ${item.name}, email: ${item.email}`)
-
-    const copyPassword = myPrompt(
-        'Would you like to copy the password to the clipboard? Y/N '
-    ).toUpperCase()
-
-    if (copyPassword === 'Y') {
-        clipboard.writeSync(item.password)
-        console.log('Password copied to clipboard')
-    }
-}
-
 export function handleMultipleResults(results: Item[]) {
     console.log('\n****** Multiple passwords found *******\n')
 
@@ -40,7 +54,7 @@ export function handleMultipleResults(results: Item[]) {
         )
     })
 
-    let name = myPrompt(' \nPlease select a single item by id: ')
+    let name = myPrompt('Please select a single item by id: ')
     let item = results.find((result) => result.id === Number(name))
 
     while (!item) {
@@ -49,5 +63,5 @@ export function handleMultipleResults(results: Item[]) {
         item = results.find((result) => result.id === Number(name))
     }
 
-    handleSingleResult(item)
+    return [item]
 }
