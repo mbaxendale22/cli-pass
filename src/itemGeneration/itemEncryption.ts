@@ -1,6 +1,6 @@
 import { pbkdf2Sync } from "crypto";
 import { decrypt, encrypt } from "../auth";
-import { getUser } from "../db";
+import { getUser } from "../db/user";
 
 /**
  * Encrypts a new item's password using the user's password. It retrieves encryption

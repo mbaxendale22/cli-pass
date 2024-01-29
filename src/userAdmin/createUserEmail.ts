@@ -1,4 +1,4 @@
-import { deleteStoredEmail, getUserEmails, storeNewUserEmail } from "../db";
+import { deleteStoredEmail, getUserEmails, storeNewUserEmail } from "../db/user_emails";
 import { createNewFormField, myPrompt } from "../utils";
 
 export async function displayCurrentUserEmails() {

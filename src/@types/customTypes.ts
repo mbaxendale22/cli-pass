@@ -34,3 +34,8 @@ export type ConfirmOrRegenOpts = {
     newPasswordLength: number;
     newPasswordOpts: { numbers: boolean; symbols: boolean };
 };
+
+export type UserEmails = {
+    id: number;
+    email: string;
+};

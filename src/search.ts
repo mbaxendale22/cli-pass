@@ -1,5 +1,5 @@
 import { Item } from "./@types/customTypes";
-import { searchByFirstLetter, searchByName } from "./db";
+import { searchByFirstLetter, searchByName } from "./db/item_search";
 import { searchTypeMenu } from "./menu";
 import { myPrompt } from "./utils";
 

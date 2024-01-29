@@ -1,8 +1,9 @@
 import { passwordIsVerified } from "./auth"
-import { createItemsTable, createUserEmailsTable, createUserTable, getUser, itemsTableExists, userTableExists } from "./db"
 import { createNewFormField, myPrompt } from "./utils"
 import { randomBytes } from "crypto";
-import { storeNewUser } from "./db";
+import { createItemsTable, createUserEmailsTable, createUserTable } from "./db/create_tables";
+import { getUser, storeNewUser, userTableExists } from "./db/user";
+import { itemsTableExists } from "./db/items";
 
 function passwordMatches(password1: string, password2: string) {
     return password1 === password2

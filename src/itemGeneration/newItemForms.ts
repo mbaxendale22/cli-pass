@@ -3,8 +3,8 @@ import {
     NewItemData,
     NewItemInput,
 } from "../@types/customTypes";
-import { getUserEmails, storeNewItem } from "../db";
-import { displayCurrentUserEmails } from "../userAdmin/createUserEmail";
+import { storeNewItem } from "../db/items";
+import { getUserEmails } from "../db/user_emails";
 import { createNewFormField, myPrompt } from "../utils";
 import { generatePassword } from "./generatePassword";
 import { encryptItem } from "./itemEncryption";

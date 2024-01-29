@@ -1,4 +1,4 @@
-import { findByIdAndUpdate } from "../db";
+import { findByIdAndUpdate } from "../db/items";
 import { generatePassword } from "../itemGeneration/generatePassword";
 import { encryptItem } from "../itemGeneration/itemEncryption";
 import { confirmOrRegenPassword } from "../itemGeneration/newItemForms";
