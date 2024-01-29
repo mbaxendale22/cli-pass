@@ -1,5 +1,5 @@
 import { passwordIsVerified } from "./auth"
-import { createItemsTable, createUserTable, getUser, itemsTableExists, userTableExists } from "./db"
+import { createItemsTable, createUserEmailsTable, createUserTable, getUser, itemsTableExists, userTableExists } from "./db"
 import { createNewFormField, myPrompt } from "./utils"
 import { randomBytes } from "crypto";
 import { storeNewUser } from "./db";
@@ -51,12 +51,14 @@ async function createNewUser(username: string, hasMasterPassword: MasterPassword
 
 async function performFirstTimeUserSetup() {
 
+    const username = createNewFormField("Please create a username: ")
+    const userMasterPassword = createMasterPassword()
+
     // TODO Error handling 
     await createUserTable()
     await createItemsTable()
+    await createUserEmailsTable()
 
-    const username = createNewFormField("Please create a username: ")
-    const userMasterPassword = createMasterPassword()
     return { username, userMasterPassword }
 }
 async function isExistingUser() {
@@ -64,7 +66,6 @@ async function isExistingUser() {
     const y = await itemsTableExists()
 
     return x && y ? true : false
-
 }
 
 /**
@@ -92,7 +93,6 @@ export async function initApp(): Promise<string> {
         await createNewUser(username, 1)
     }
     else {
-
         const user = await getUser()
         if (user.hasMasterPassword === 0) {
             console.log("it looks like you havent yet created a master password")
