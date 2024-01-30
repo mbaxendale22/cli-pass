@@ -9,6 +9,29 @@ import { createNewFormField, myPrompt } from "../utils";
 import { generatePassword } from "./generatePassword";
 import { encryptItem } from "./itemEncryption";
 
+export function createPasswordText() {
+    const newPasswordOpts = { numbers: true, symbols: true };
+    const newPasswordLength = 16;
+    let confirmedPassword = "";
+
+    console.log(
+        "Would you like to generate a new password or enter one manually?",
+    );
+    const response = myPrompt("Press 1 to generate or 2 to enter manually: ");
+
+    if (response === "2") {
+        confirmedPassword = createNewFormField("Enter your new password: ");
+    } else {
+        const newPassword = generatePassword(newPasswordLength, newPasswordOpts);
+        confirmedPassword = confirmOrRegenPassword({
+            newPassword,
+            newPasswordLength,
+            newPasswordOpts,
+        });
+    }
+    return confirmedPassword;
+}
+
 export function confirmOrRegenPassword(opts: ConfirmOrRegenOpts): string {
     let confirm = false;
     let confirmedPassword = opts.newPassword;
@@ -32,20 +55,10 @@ async function createNewItemData(
     newItemInput: NewItemInput,
 ) {
     const { name, email, url, notes } = newItemInput;
-    const newPasswordOpts = { numbers: true, symbols: true };
-    const newPasswordLength = 16;
-    const newPassword = generatePassword(newPasswordLength, newPasswordOpts);
-    const confirmedPassword = confirmOrRegenPassword({
-        newPassword,
-        newPasswordLength,
-        newPasswordOpts,
-    });
 
+    const newPasswordText = createPasswordText();
     //TODO handle this potential error
-    const encryptedNewPassword = await encryptItem(
-        userPassword,
-        confirmedPassword,
-    );
+    const encryptedNewPassword = await encryptItem(userPassword, newPasswordText);
 
     const newItem: NewItemData = {
         name,
@@ -65,16 +78,12 @@ async function selectEmail() {
     console.log("Would you like to:\n1) use a saved email\n2) enter a new one?");
     const createNewEmail = myPrompt("Please enter your choice: ");
     if (createNewEmail === "2") {
-        email = createNewFormField(
-            "Please enter an email for this item?: ",
-        );
+        email = createNewFormField("Please enter an email for this item?: ");
         return email;
     }
     if (!userEmails.length) {
         console.log("You currently have no saved emails!");
-        email = createNewFormField(
-            "Please enter an email for this item?: ",
-        );
+        email = createNewFormField("Please enter an email for this item?: ");
         return email;
     }
     console.log("Here are your currently saved emails:\n");

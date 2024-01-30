@@ -7,6 +7,7 @@ import { Item } from "./@types/customTypes";
 import { handleUserEmails } from "./userAdmin/createUserEmail";
 
 // TODO: give user option to change params of generated password
+// TODO: create manual password gen option
 
 // test master password = "testpassword"
 let active_master_password = "";
@@ -23,7 +24,6 @@ async function main() {
             case "1":
                 itemArr = await searchForPassword();
                 if (!itemArr.length) break;
-                // read update delete
                 await rudMenu(itemArr.at(0), active_master_password);
                 break;
             case "2":

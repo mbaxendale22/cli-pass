@@ -1,22 +1,13 @@
 import { findByIdAndUpdate } from "../db/items";
-import { generatePassword } from "../itemGeneration/generatePassword";
 import { encryptItem } from "../itemGeneration/itemEncryption";
-import { confirmOrRegenPassword } from "../itemGeneration/newItemForms";
-
+import { createPasswordText } from "../itemGeneration/newItemForms";
 export async function updatePassword(userPassword: string, itemId: number) {
-    const newPasswordOpts = { numbers: true, symbols: true };
-    const newPasswordLength = 16;
-    const newPassword = generatePassword(newPasswordLength, newPasswordOpts);
-    const confirmedPassword = confirmOrRegenPassword({
-        newPassword,
-        newPasswordLength,
-        newPasswordOpts,
-    });
 
+    const newPasswordText = createPasswordText();
     //TODO handle this potential error
     const encryptedNewPassword = await encryptItem(
         userPassword,
-        confirmedPassword,
+        newPasswordText,
     );
     try {
         await findByIdAndUpdate(itemId, encryptedNewPassword);
