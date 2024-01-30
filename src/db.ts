@@ -2,8 +2,6 @@ import sqlite3 from 'aa-sqlite'
 
 import { DBStatus } from './utils'
 import { Item, NewItemData, UserData } from './@types/customTypes'
-
-
 async function connectDB() {
     try {
         await sqlite3.open('pzwd.db')
@@ -11,7 +9,6 @@ async function connectDB() {
         console.log(err)
     }
 }
-
 export async function searchByFirstLetter(letter: string): Promise<Item[]> {
     await connectDB()
     try {

@@ -1,16 +1,13 @@
-
 import { topLevelMenuChoice } from './menu'
 import { searchForPassword } from './search'
 import { createNewItem } from './itemGeneration/newItemForms'
 import { rudMenu } from './readUpdateDeleteItems/rudMenu'
 import { initApp } from './startup'
 import { Item } from './@types/customTypes'
-
 // TODO: give user option to change params of generated password
 // TODO: give user option to preview enerated password and regen if necessary
 // TODO: allow user to generate a new password for an existing item
 // TODO: allow user to save email accounts for quick entry
-
 // test master password = "testpassword"
 let active_master_password = ''
 

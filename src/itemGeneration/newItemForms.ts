@@ -45,3 +45,4 @@ export async function createNewItem(active_master_password: string) {
     const newItem = await createNewItemData(active_master_password, newItemData)
     await storeNewItem(newItem)
 }
+

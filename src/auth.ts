@@ -8,7 +8,6 @@ export function encrypt(data: string, key: Buffer) {
     return iv.toString('hex') + ':' + encrypted;
 
 }
-
 export function decrypt(encryptedData: string, key: Buffer) {
     try {
         const parts = encryptedData.split(':');
