@@ -1,6 +1,6 @@
 import { pbkdf2Sync } from "crypto";
 import { decrypt, encrypt } from "../auth";
-import { getUser } from "../db";
+import { getUser } from "../db/user";
 
 /**
  * Encrypts a new item's password using the user's password. It retrieves encryption
@@ -32,7 +32,6 @@ export async function encryptItem(userPassword: string, dataToEncrypt: string) {
 export async function decryptItem(userPassword: string, encryptedData: string) {
     const { salt, iterations, keyLength, digest } = await getUser()
 
-    console.log("MP in decryptItem func: ", userPassword)
     const derivedKey = pbkdf2Sync(userPassword, salt, iterations, keyLength, digest);
     const decryptedItemPassword = decrypt(encryptedData, derivedKey)
     return decryptedItemPassword

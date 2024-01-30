@@ -1,4 +1,4 @@
-import { findByIdAndDelete } from "../db"
+import { findByIdAndDelete } from "../db/items"
 import { DBStatus, myPrompt } from "../utils"
 
 export async function handleDeleteItem(itemId: number) {

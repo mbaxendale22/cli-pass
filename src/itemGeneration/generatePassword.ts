@@ -25,7 +25,6 @@ export function generatePassword(length: number, options: { numbers: boolean; sy
         if (options.numbers && numCount < 1) {
             randomIndex = Math.floor(Math.random() * numbers.length)
             newChar = numbers[randomIndex]
-            console.log("adding a new number")
             numCount++
         }
 

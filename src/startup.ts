@@ -1,8 +1,9 @@
 import { passwordIsVerified } from "./auth"
-import { createItemsTable, createUserTable, getUser, itemsTableExists, userTableExists } from "./db"
 import { createNewFormField, myPrompt } from "./utils"
 import { randomBytes } from "crypto";
-import { storeNewUser } from "./db";
+import { createItemsTable, createUserEmailsTable, createUserTable } from "./db/create_tables";
+import { getUser, storeNewUser, userTableExists } from "./db/user";
+import { itemsTableExists } from "./db/items";
 
 function passwordMatches(password1: string, password2: string) {
     return password1 === password2
@@ -10,8 +11,6 @@ function passwordMatches(password1: string, password2: string) {
 
 function createMasterPassword() {
     console.log("In order to continue you'll need to make master password")
-
-    console.log("You must keep this password safe and remember it. In the current version of this app, the master password CANNOT be changed.\nIf you lose it, you will *PERMANENTLY* lose access to these passwords\n")
 
     let pwd = myPrompt("Please enter a master password: ")
     while (!passwordIsVerified(pwd)) {
@@ -51,12 +50,14 @@ async function createNewUser(username: string, hasMasterPassword: MasterPassword
 
 async function performFirstTimeUserSetup() {
 
+    const username = createNewFormField("Please create a username: ")
+    const userMasterPassword = createMasterPassword()
+
     // TODO Error handling 
     await createUserTable()
     await createItemsTable()
+    await createUserEmailsTable()
 
-    const username = createNewFormField("Please create a username: ")
-    const userMasterPassword = createMasterPassword()
     return { username, userMasterPassword }
 }
 async function isExistingUser() {
@@ -64,7 +65,6 @@ async function isExistingUser() {
     const y = await itemsTableExists()
 
     return x && y ? true : false
-
 }
 
 /**
@@ -92,7 +92,6 @@ export async function initApp(): Promise<string> {
         await createNewUser(username, 1)
     }
     else {
-
         const user = await getUser()
         if (user.hasMasterPassword === 0) {
             console.log("it looks like you havent yet created a master password")
