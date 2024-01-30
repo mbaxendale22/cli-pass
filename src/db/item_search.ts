@@ -1,13 +1,6 @@
 import sqlite3 from "aa-sqlite";
 import { Item } from "../@types/customTypes";
-
-async function connectDB() {
-    try {
-        await sqlite3.open("clipass.db");
-    } catch (err) {
-        console.log(err);
-    }
-}
+import { connectDB } from "./db_utils";
 
 export async function searchByFirstLetter(letter: string): Promise<Item[]> {
     await connectDB();

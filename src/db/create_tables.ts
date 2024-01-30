@@ -1,11 +1,6 @@
 import sqlite3 from "aa-sqlite";
-async function connectDB() {
-    try {
-        await sqlite3.open("clipass.db");
-    } catch (err) {
-        console.log(err);
-    }
-}
+import { connectDB } from "./db_utils";
+
 export async function createUserTable() {
     const tableSchema = `id INTEGER, username TEXT, salt TEXT, keyLength INTEGER, iterations INTEGER, digest TEXT, hasMasterPassword INTEGER, PRIMARY KEY(id)`;
     const qryStatment = `CREATE TABLE user (${tableSchema})`;

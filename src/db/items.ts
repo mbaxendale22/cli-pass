@@ -2,15 +2,8 @@
 import sqlite3 from "aa-sqlite";
 import { NewItemData } from "../@types/customTypes";
 import { DBStatus } from "../utils";
+import { connectDB } from "./db_utils";
 
-async function connectDB() {
-    try {
-        await sqlite3.open("clipass.db");
-    } catch (err) {
-        console.log(err);
-    }
-
-}
 export async function itemsTableExists() {
     const qryStatment =
         "SELECT COUNT(*) FROM sqlite_master WHERE type='table' and name='items'";
