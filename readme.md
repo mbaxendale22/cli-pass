@@ -30,6 +30,5 @@ not be able to access the data, you cannot reset your master password, so that w
 - Update passwords at any time
 
 ### WIP Features
-- manually enter new password (primarly for transfering passwords over) 
 - update email for existing saved passwords 
 - master password reset

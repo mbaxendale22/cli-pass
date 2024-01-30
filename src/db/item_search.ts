@@ -35,3 +35,15 @@ export async function searchByName(name: string): Promise<Item[]> {
         sqlite3.close();
     }
 }
+
+export async function getAllItems(): Promise<Item[]> {
+    await connectDB();
+    try {
+        const items = await sqlite3.all("select * from items");
+        return items;
+    } catch (err) {
+        console.log(err);
+    } finally {
+        sqlite3.close();
+    }
+}

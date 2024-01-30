@@ -27,7 +27,7 @@ export function createNewFormField(prompt: string): string {
         if (field === '') {
             console.log("You've chosen to leave this field blank, is this correct?")
         } else {
-            console.log("You've entered: ", field, "is this correct?")
+            console.log("You've entered:", field, "\nis this correct?")
         }
         const confirm = myPrompt("Press Y to confirm or N to re-enter: ").toUpperCase()
         if (confirm === 'Y') {

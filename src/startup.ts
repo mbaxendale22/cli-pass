@@ -12,8 +12,6 @@ function passwordMatches(password1: string, password2: string) {
 function createMasterPassword() {
     console.log("In order to continue you'll need to make master password")
 
-    console.log("You must keep this password safe and remember it. In the current version of this app, the master password CANNOT be changed.\nIf you lose it, you will *PERMANENTLY* lose access to these passwords\n")
-
     let pwd = myPrompt("Please enter a master password: ")
     while (!passwordIsVerified(pwd)) {
         console.log("That password is not strong enough have another go\n")

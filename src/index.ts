@@ -7,9 +7,7 @@ import { Item } from "./@types/customTypes";
 import { handleUserEmails } from "./userAdmin/createUserEmail";
 
 // TODO: give user option to change params of generated password
-// TODO: create manual password gen option
 
-// test master password = "testpassword"
 let active_master_password = "";
 
 async function main() {

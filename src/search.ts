@@ -1,11 +1,16 @@
 import { Item } from "./@types/customTypes";
-import { searchByFirstLetter, searchByName } from "./db/item_search";
+import {
+    getAllItems,
+    searchByFirstLetter,
+    searchByName,
+} from "./db/item_search";
 import { searchTypeMenu } from "./menu";
 import { myPrompt } from "./utils";
 
 export enum SearchType {
     NAME = "1",
     LETTER = "2",
+    ALL = "3",
 }
 export async function searchForPassword() {
     const searchType = searchTypeMenu();
@@ -33,6 +38,13 @@ export async function searchForPassword() {
         }
         return handleMultipleResults(items);
     }
+
+    items = await getAllItems();
+    if (!items.length) {
+        console.log("No passwords found");
+        return items;
+    }
+    return handleMultipleResults(items);
 }
 
 export function selectSearchType(searchType: string) {
@@ -41,6 +53,9 @@ export function selectSearchType(searchType: string) {
     }
     if (searchType === SearchType.LETTER) {
         return SearchType.LETTER;
+    }
+    if (searchType === SearchType.ALL) {
+        return SearchType.ALL;
     }
     return null;
 }

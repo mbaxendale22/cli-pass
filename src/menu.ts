@@ -23,7 +23,7 @@ export function topLevelMenuChoice() {
 export function searchTypeMenu() {
     let valid = false
     while (!valid) {
-        console.log('\nHow would you like to search?\n\n1) By NAME\n2) By FIRST LETTER\n')
+        console.log('\nHow would you like to search?\n\n1) By NAME\n2) By FIRST LETTER\n3) View ALL Passwords\n')
         const searchTypeInput = myPrompt('Please select an option: ')
         const searchType = selectSearchType(searchTypeInput)
         if (searchType) {
