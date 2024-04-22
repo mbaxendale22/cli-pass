@@ -17,9 +17,17 @@ npm start
 ```
 
 ## Warning
+
 This is a hobby project, do not use for cruical data. The program uses KDF encryption to store and retrieve saved passwords
 securely. With the current set up, the user's master password is not stored in the database. If you lose your password, you will
 not be able to access the data, you cannot reset your master password, so that will be that.
+
+## Platform Compatibility
+
+The only OS specific issue I've run into so far relates to copying to the clipboard. On Mac there should be no problems. On Linux
+you'll get an error if you're missing the required package but the error states how to fix and install. I've never tested the app 
+on Windows. If you do let me know.
+
 
 ## Feature list
 
@@ -30,5 +38,7 @@ not be able to access the data, you cannot reset your master password, so that w
 - Update passwords at any time
 
 ### WIP Features
+
 - update email for existing saved passwords 
 - master password reset
+
